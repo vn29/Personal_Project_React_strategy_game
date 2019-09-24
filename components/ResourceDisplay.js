@@ -11,10 +11,10 @@ class ResourceDisplay extends React.Component {
                //make a range for this many factories
                const fact_range = [...Array(this.props.passedvalue2.factories).keys()];
                const factory_icons = fact_range.map((factory) =>
-                    <ResourceImage/>
+                    <ResourceImage rname = {this.props.resourceName}/>
                );
                return( <div>
-                    {factory_icons}
+                    factories: {factory_icons}
                </div>
                     
                );
@@ -23,10 +23,10 @@ class ResourceDisplay extends React.Component {
                //make a range for this many workers
                const worker_range = [...Array(this.props.passedvalue2.workers).keys()];
                const worker_icons = worker_range.map((worker) =>
-                    <ResourceImage/>
+                    <ResourceImage rname = {this.props.resourceName} />
                );
                return( <div>
-                    {worker_icons}
+                    workers: {worker_icons}
                </div>
                     
                );
