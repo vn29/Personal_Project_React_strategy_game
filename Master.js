@@ -7,7 +7,7 @@ import ResourceImage from './components/ResourceImage.js';
 
 
    
-   class Game extends React.Component {
+   class Master extends React.Component {
         constructor(props){
              super(props);
              this.state = {
@@ -121,7 +121,7 @@ import ResourceImage from './components/ResourceImage.js';
    // ========================================
    
    ReactDOM.render(
-     <Game />,
+     <Master />,
      document.getElementById('root')
    );
    
