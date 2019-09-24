@@ -1,17 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+import './components/ResourceDisplay.js';
+import ResourceDisplay from './components/ResourceDisplay.js';
 
-class ResourceDisplay extends React.Component {
-     constructor(props){
-          super(props);
-          this.state = {};
-     }
-     render(){
-          return (""
-          );
-     }
-}
+
    
    class Game extends React.Component {
         constructor(props){
@@ -92,14 +85,14 @@ class ResourceDisplay extends React.Component {
                <button onClick = {() => this.build_factory()} >Build Factory</button>
 
                <div className = "display">
-                    <p>message: {this.state.message}</p>
-                    <p>energy: {this.state.energy}</p>
-                    <p>minerals: {this.state.minerals}</p>
-                    <p>food: {this.state.food}</p>
-                    <p>alloys: {this.state.alloys}</p>
-                    <p>factories: {this.state.factories}</p>
-                    <p>workers: {this.state.workers}</p>
-                    <p>day: {this.state.day}</p>
+                    <ResourceDisplay resourceName = {"message"} passedvalue1 = {this.state.message} passedvalue2 = {this.state}/>
+                    <ResourceDisplay resourceName = {"energy"} passedvalue1 = {this.state.energy} passedvalue2 = {this.state}/>
+                    <ResourceDisplay resourceName = {"minerals"} passedvalue1 = {this.state.minerals} passedvalue2 = {this.state}/>
+                    <ResourceDisplay resourceName = {"food"} passedvalue1 = {this.state.food} passedvalue2 = {this.state}/>
+                    <ResourceDisplay resourceName = {"alloys"} passedvalue1 = {this.state.alloys} passedvalue2 = {this.state}/>
+                    <ResourceDisplay resourceName = {"factories"} passedvalue1 = {this.state.factories} passedvalue2 = {this.state}/>
+                    <ResourceDisplay resourceName = {"workers"} passedvalue1 = {this.state.workers} passedvalue2 = {this.state}/>
+                    <ResourceDisplay resourceName = {"day"} passedvalue1 = {this.state.day} passedvalue2 = {this.state}/>
                     
                </div>
             </div>
