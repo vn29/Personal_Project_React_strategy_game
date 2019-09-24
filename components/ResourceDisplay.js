@@ -7,33 +7,16 @@ class ResourceDisplay extends React.Component {
 
      render(){
           
-          if (this.props.resourceName == 'factories') {
-               //make a range for this many factories
-               const fact_range = [...Array(this.props.passedvalue2.factories).keys()];
-               const factory_icons = fact_range.map((factory) =>
-                    <ResourceImage rname = {this.props.resourceName}/>
-               );
+          if (this.props.resourceName == 'factories' || this.props.resourceName == 'workers') {
                return( <div>
-                    factories: {factory_icons}
-               </div>
-                    
-               );
-          }
-          if (this.props.resourceName == 'workers') {
-               //make a range for this many workers
-               const worker_range = [...Array(this.props.passedvalue2.workers).keys()];
-               const worker_icons = worker_range.map((worker) =>
-                    <ResourceImage rname = {this.props.resourceName} />
-               );
-               return( <div>
-                    workers: {worker_icons}
+                    {this.props.resourceName} :  {this.props.passedMethod()}
                </div>
                     
                );
           }
           return (
                <div>
-                    {this.props.resourceName} : {this.props.passedvalue1}
+                    {this.props.resourceName} : {this.props.passedvalue1} 
                </div>
           );
      }
