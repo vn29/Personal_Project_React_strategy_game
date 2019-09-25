@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Button from 'react-bootstrap/Button';
+import ButtonGroup  from 'react-bootstrap/ButtonGroup';
 import './index.css';
 import './components/ResourceDisplay.js';
 import ResourceDisplay from './components/ResourceDisplay.js';
@@ -37,15 +38,19 @@ import Wheat_img from './icons/wheat.png';
                day
           } = this.state;
 
+          var tem_workers = workers;
+          if (food == 0) {
+               var tem_workers = workers -1;
+          };
 
           this.setState(
                {
-                    energy : energy + 1.*factories/2*workers/4 - workers/16,
-                    minerals : minerals + 1.*factories*workers,
-                    food : food + 1.*factories/2*workers/2 - workers/8,
-                    alloys : alloys + 1.*factories/3*workers/4*minerals/4,
+                    energy : Math.max(energy + 1.*factories/2*workers/4 - workers/16,0),
+                    minerals : Math.max(minerals + 1.*factories/3*workers/2,0),
+                    food : Math.max(food + 1.*factories/2 - workers/5,0),
+                    alloys : Math.max(alloys + 1.*factories/8*workers/16*minerals/4,0),
                     factories : factories,
-                    workers : workers,
+                    workers : tem_workers,
                     day : day + 1,
                     message : "",
                }
@@ -54,15 +59,58 @@ import Wheat_img from './icons/wheat.png';
 
      build_factory() {
           var t = this.state;
-          if (t.energy < 2 || t.minerals <4 || t.workers < 1 || t.alloys < 0.5) {
+          var tem_workers = t.workers;
+          if (t.workers > 1) {
+               tem_workers = t.workers - 1
+          }
+
+          if (t.energy < 2 || t.minerals <4 || t.workers < 1 || t.alloys < 3) {
                this.setState({message:"Not enough resources to build a factory"})
           } else {
                this.setState({
                     factories : t.factories + 1,
                     energy : t.energy - 1,
                     minerals : t.minerals - 4,
-                    workers : t.workers - 1,
-                    alloys : t.alloys - 0.5,
+                    workers : tem_workers,
+                    alloys : t.alloys - 3,
+               })
+          }
+     }
+
+     sell_factory() {
+          var t = this.state;
+          if (t.factory < 2) {
+               this.setState({message:"Not enough resources to sell a factory"})
+          } else {
+               this.setState({
+                    factories : t.factories - 1,
+                    energy : t.energy + 0.5,
+                    minerals : t.minerals + 2,
+                    alloys : t.alloys - 1,
+               })
+          }
+     }
+
+     buy_food() {
+          var t = this.state;
+          if (t.energy < 1) {
+               this.setState({message: "Not enough energy to buy food"})
+          } else {
+               this.setState({
+                    energy : t.energy - 1,
+                    food : t.food + 1
+               })
+          }
+     }
+
+     sell_food() {
+          var t = this.state;
+          if (t.food < 1) {
+               this.setState({message: "Not enough food to meet minimum sell amount"})
+          } else {
+               this.setState({
+                    energy : t.energy + 0.5,
+                    food : t.food - 1
                })
           }
      }
@@ -98,6 +146,20 @@ import Wheat_img from './icons/wheat.png';
                })
           }
      }
+
+     terminate_worker() {
+          var t = this.state;
+          if (t.workers <=1) {
+               this.setState( {message : "Cannot fire last worker"})
+          } else {
+               this.setState( {
+                    energy : t.energy + 0.25,
+                    workers : t.workers - 1,
+               })
+          }
+     }
+
+
      render() {
           let {
                message,
@@ -112,23 +174,31 @@ import Wheat_img from './icons/wheat.png';
 
        return (
             <div className = "master">
-               <Button variant="primary" size="sm" onClick = {() => this.daily()} >End Turn</Button>
-               <div className = "display">
+               <Button className = 'end-turn-button' variant="secondary" size="sm" onClick = {() => this.daily()} >End Turn</Button>
+               <div className = "main_display">
                     <ResourceDisplay resourceName = {"message"} passedvalue1 = {message}/>
                     <ResourceDisplay resourceName = {"energy"} passedvalue1 = {energy}/>
                     <ResourceDisplay resourceName = {"minerals"} passedvalue1 = {minerals}/>
-                    <ResourceDisplay resourceName = {"food"} passedvalue1 = {food}/>
                     <ResourceDisplay resourceName = {"alloys"} passedvalue1 = {alloys}/>
                     <div className = "mr_block">
-                         <div className = "mr_inline">
-                              <Button variant="primary" size="sm" onClick = { () => this.build_factory()} >+</Button>
-                         </div>
+                         <ButtonGroup  className = "mr_inline">
+                              <Button variant="secondary" size="sm" onClick = { () => this.buy_food()} >+</Button>
+                              <Button variant="secondary" size="sm" onClick = { () => this.sell_food()} >-</Button>
+                         </ButtonGroup >
+                         <ResourceDisplay resourceName = {"food"} passedvalue1 = {food}/>
+                    </div>
+                    <div className = "mr_block">
+                         <ButtonGroup className = "mr_inline">
+                              <Button variant="secondary" size="sm" onClick = { () => this.build_factory()} >+</Button>
+                              <Button variant="secondary" size="sm" onClick = { () => this.sell_factory()} >-</Button>
+                         </ButtonGroup>
                          <ResourceDisplay resourceName = {"factories"} passedMethod = {() => this.rdcf()}/>
                     </div>
                     <div className = "mr_block">
-                         <div className = "mr_inline">
-                              <Button variant="primary" size='sm' onClick = {() => this.hire_worker()} >+</Button>
-                         </div>
+                         <ButtonGroup className = "mr_inline">
+                              <Button variant="secondary" size='sm' onClick = {() => this.hire_worker()} >+</Button>
+                              <Button variant="secondary" size='sm' onClick = {() => this.terminate_worker()} >-</Button>
+                         </ButtonGroup>
                          <ResourceDisplay resourceName = {"workers"} passedMethod = {() => this.rdcw()}/>
                     </div>
                     <ResourceDisplay resourceName = {"day"} passedvalue1 = {day}/>
