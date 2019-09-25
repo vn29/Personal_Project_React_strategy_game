@@ -9,13 +9,14 @@ class ResourceDisplay extends React.Component {
           let {
                resourceName,
                passedvalue1,
-               passedMethod
+               passedMethod,
+               counts
           } = this.props;
 
           
           if (resourceName == 'factories' || resourceName == 'workers') {
                return( <div className='mr_inline'>
-                    {resourceName} :  {passedMethod()}
+                    {resourceName}({counts}) :  {passedMethod()}
                </div>
                     
                );
