@@ -1,9 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Button from 'react-bootstrap/Button';
 import './index.css';
 import './components/ResourceDisplay.js';
 import ResourceDisplay from './components/ResourceDisplay.js';
 import ResourceImage from './components/ResourceImage.js';
+import Factory_img from './icons/factory.png';
+import Worker_img from './icons/person.png';
+import Wheat_img from './icons/wheat.png';
 
 
    
@@ -22,32 +27,26 @@ import ResourceImage from './components/ResourceImage.js';
              };
         }
      daily() {
-          var t = this.state;
-          var energy = t.energy;
-          var minerals = t.minerals;
-          var food = t.food;
-          var alloys = t.alloys;
-          var factories = t.factories;
-          var workers = t.workers;
-          var day = t.day;
+          let {
+               energy,
+               minerals,
+               food,
+               alloys,
+               factories,
+               workers,
+               day
+          } = this.state;
 
-          var new_energy = energy + 1.*factories/2*workers/4 - workers/16;
-          var new_minerals = minerals + 1.*factories*workers;
-          var new_food = food + 1.*factories/2*workers/2 - workers/8;
-          var new_alloys = alloys + 1.*factories/3*workers/4*minerals/4;
-          var new_factories = factories;
-          var new_workers = workers;
-          var new_day = day + 1;
 
           this.setState(
                {
-                    energy : new_energy,
-                    minerals : new_minerals,
-                    food : new_food,
-                    alloys : new_alloys,
-                    factories : new_factories,
-                    workers : new_workers,
-                    day : new_day,
+                    energy : energy + 1.*factories/2*workers/4 - workers/16,
+                    minerals : minerals + 1.*factories*workers,
+                    food : food + 1.*factories/2*workers/2 - workers/8,
+                    alloys : alloys + 1.*factories/3*workers/4*minerals/4,
+                    factories : factories,
+                    workers : workers,
+                    day : day + 1,
                     message : "",
                }
           );
@@ -71,7 +70,8 @@ import ResourceImage from './components/ResourceImage.js';
      rdcf() {
           const fact_range = [...Array(this.state.factories).keys()];
           const factory_icons = fact_range.map((factory) =>
-               <ResourceImage rname = {"f" + (factory + 1)}/>
+               <ResourceImage rname = {"f" + (factory + 1)} imglink = {Factory_img}/>
+               
           );
           return factory_icons;
      }
@@ -79,7 +79,10 @@ import ResourceImage from './components/ResourceImage.js';
      rdcw() {
           const worker_range = [...Array(this.state.workers).keys()];
           const worker_icons = worker_range.map((worker) =>
-               <ResourceImage rname = {"w"+ (worker + 1)} />
+               <div className = "RImage">
+                    <ResourceImage rname = {"w"+ (worker + 1)} imglink = {Worker_img}/> 
+                    
+               </div>
           );
           return worker_icons;
      }
@@ -96,21 +99,39 @@ import ResourceImage from './components/ResourceImage.js';
           }
      }
      render() {
+          let {
+               message,
+               energy,
+               minerals,
+               food,
+               alloys,
+               day,
+          } = this.state;
+
+
+
        return (
             <div className = "master">
-               <button onClick = {() => this.daily()} >End Turn</button>
-               <button onClick = {() => this.hire_worker()} >Hire Worker</button>
-               <button onClick = {() => this.build_factory()} >Build Factory</button>
-
+               <Button variant="primary" size="sm" onClick = {() => this.daily()} >End Turn</Button>
                <div className = "display">
-                    <ResourceDisplay resourceName = {"message"} passedvalue1 = {this.state.message}/>
-                    <ResourceDisplay resourceName = {"energy"} passedvalue1 = {this.state.energy}/>
-                    <ResourceDisplay resourceName = {"minerals"} passedvalue1 = {this.state.minerals}/>
-                    <ResourceDisplay resourceName = {"food"} passedvalue1 = {this.state.food}/>
-                    <ResourceDisplay resourceName = {"alloys"} passedvalue1 = {this.state.alloys}/>
-                    <ResourceDisplay resourceName = {"factories"} passedMethod = {() => this.rdcf()}/>
-                    <ResourceDisplay resourceName = {"workers"} passedMethod = {() => this.rdcw()}/>
-                    <ResourceDisplay resourceName = {"day"} passedvalue1 = {this.state.day}/>
+                    <ResourceDisplay resourceName = {"message"} passedvalue1 = {message}/>
+                    <ResourceDisplay resourceName = {"energy"} passedvalue1 = {energy}/>
+                    <ResourceDisplay resourceName = {"minerals"} passedvalue1 = {minerals}/>
+                    <ResourceDisplay resourceName = {"food"} passedvalue1 = {food}/>
+                    <ResourceDisplay resourceName = {"alloys"} passedvalue1 = {alloys}/>
+                    <div className = "mr_block">
+                         <div className = "mr_inline">
+                              <Button variant="primary" size="sm" onClick = { () => this.build_factory()} >+</Button>
+                         </div>
+                         <ResourceDisplay resourceName = {"factories"} passedMethod = {() => this.rdcf()}/>
+                    </div>
+                    <div className = "mr_block">
+                         <div className = "mr_inline">
+                              <Button variant="primary" size='sm' onClick = {() => this.hire_worker()} >+</Button>
+                         </div>
+                         <ResourceDisplay resourceName = {"workers"} passedMethod = {() => this.rdcw()}/>
+                    </div>
+                    <ResourceDisplay resourceName = {"day"} passedvalue1 = {day}/>
                     
                </div>
             </div>
