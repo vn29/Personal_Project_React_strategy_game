@@ -28,6 +28,16 @@ class ResourceDisplay extends React.Component {
                );
           }
 
+          if (resourceName == 'food') {
+               return(
+                    <div className='mr_inline'>
+                    {resourceName} : <NumberFormat value={passedvalue1} 
+                                                              displayType = 'text' 
+                                                              decimalScale = {2}/> 
+               </div>
+               );
+          }
+
           return (
                <div>
                     {resourceName} : <NumberFormat value={passedvalue1} 
