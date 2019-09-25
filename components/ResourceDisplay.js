@@ -1,22 +1,38 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './ResourceImage.js';
-import ResourceImage from './ResourceImage.js';
+import NumberFormat from 'react-number-format';
+
 
 class ResourceDisplay extends React.Component {
 
      render(){
+          let {
+               resourceName,
+               passedvalue1,
+               passedMethod
+          } = this.props;
+
           
-          if (this.props.resourceName == 'factories' || this.props.resourceName == 'workers') {
-               return( <div>
-                    {this.props.resourceName} :  {this.props.passedMethod()}
+          if (resourceName == 'factories' || resourceName == 'workers') {
+               return( <div className='mr_inline'>
+                    {resourceName} :  {passedMethod()}
                </div>
                     
                );
           }
+
+          if (resourceName == 'message') {
+               return( <div className='mr_inline'>
+                    {resourceName} :  {passedvalue1}
+                    </div>
+               );
+          }
+
           return (
                <div>
-                    {this.props.resourceName} : {this.props.passedvalue1} 
+                    {resourceName} : <NumberFormat value={passedvalue1} 
+                                                              displayType = 'text' 
+                                                              decimalScale = {2}/> 
                </div>
           );
      }
