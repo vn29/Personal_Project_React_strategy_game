@@ -118,7 +118,7 @@ import Wheat_img from './icons/wheat.png';
      rdcf() {
           const fact_range = [...Array(this.state.factories).keys()];
           const factory_icons = fact_range.map((factory) =>
-               <ResourceImage rname = {"f" + (factory + 1)} imglink = {Factory_img}/>
+               <ResourceImage rname = {(factory + 1)} imglink = {Factory_img}/>
                
           );
           return factory_icons;
@@ -128,7 +128,7 @@ import Wheat_img from './icons/wheat.png';
           const worker_range = [...Array(this.state.workers).keys()];
           const worker_icons = worker_range.map((worker) =>
                <div className = "RImage">
-                    <ResourceImage rname = {"w"+ (worker + 1)} imglink = {Worker_img}/> 
+                    <ResourceImage rname = {(worker + 1)} imglink = {Worker_img}/> 
                     
                </div>
           );
@@ -168,6 +168,8 @@ import Wheat_img from './icons/wheat.png';
                food,
                alloys,
                day,
+               factories,
+               workers
           } = this.state;
 
 
@@ -192,14 +194,14 @@ import Wheat_img from './icons/wheat.png';
                               <Button variant="secondary" size="sm" onClick = { () => this.build_factory()} >+</Button>
                               <Button variant="secondary" size="sm" onClick = { () => this.sell_factory()} >-</Button>
                          </ButtonGroup>
-                         <ResourceDisplay resourceName = {"factories"} passedMethod = {() => this.rdcf()}/>
+                         <ResourceDisplay resourceName = {"factories"} passedMethod = {() => this.rdcf()} counts={factories}/>
                     </div>
                     <div className = "mr_block">
                          <ButtonGroup className = "mr_inline">
                               <Button variant="secondary" size='sm' onClick = {() => this.hire_worker()} >+</Button>
                               <Button variant="secondary" size='sm' onClick = {() => this.terminate_worker()} >-</Button>
                          </ButtonGroup>
-                         <ResourceDisplay resourceName = {"workers"} passedMethod = {() => this.rdcw()}/>
+                         <ResourceDisplay resourceName = {"workers"} passedMethod = {() => this.rdcw()} counts={workers}/>
                     </div>
                     <ResourceDisplay resourceName = {"day"} passedvalue1 = {day}/>
                     
