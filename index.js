@@ -5,11 +5,13 @@ import Button from 'react-bootstrap/Button';
 import ButtonGroup  from 'react-bootstrap/ButtonGroup';
 import './index.css';
 import './components/ResourceDisplay.js';
+import Square from './components/Square.js';
 import ResourceDisplay from './components/ResourceDisplay.js';
 import ResourceImage from './components/ResourceImage.js';
 import Factory_img from './icons/factory.png';
 import Worker_img from './icons/person.png';
 import Wheat_img from './icons/wheat.png';
+
 
 
    
@@ -25,7 +27,18 @@ import Wheat_img from './icons/wheat.png';
                workers : 1.,
                day : 1.,
                message : "",
+               board : {a1: 0,
+                        a2: 0,
+                        a3: 0,
+                        b1: 0,
+                        b2: 0,
+                        b3: 0,
+                        c1: 0,
+                        c2: 0,
+                        c3: 0}
              };
+          this.build_factory = this.build_factory.bind(this)
+          this.sell_factory = this.sell_factory.bind(this)
         }
      daily() {
           let {
@@ -169,8 +182,11 @@ import Wheat_img from './icons/wheat.png';
                alloys,
                day,
                factories,
-               workers
+               workers,
+               board,
           } = this.state;
+
+           var fx = [() => this.build_factory(),() => this.sell_factory() ]
 
 
 
@@ -204,7 +220,21 @@ import Wheat_img from './icons/wheat.png';
                          <ResourceDisplay resourceName = {"workers"} passedMethod = {() => this.rdcw()} counts={workers}/>
                     </div>
                     <ResourceDisplay resourceName = {"day"} passedvalue1 = {day}/>
-                    
+               </div>
+               <div className = "board">
+                    <div className = "board-row"/>
+                         <Square className = "square" idd = {'a1'} fx = {fx}/>
+                         <Square className = "square" idd = {'a2'} fx = {fx}/>
+                         <Square className = "square" idd = {'a3'} fx = {fx}/>
+                    <div className = "board-row"/>
+                         <Square className = "square" idd = {'b1'} fx = {fx}/>
+                         <Square className = "square" idd = {'b2'} fx = {fx}/>
+                         <Square className = "square" idd = {'b3'} fx = {fx}/>
+                    <div className = "board-row"/>
+                         <Square className = "square" idd = {'c1'} fx = {fx}/>
+                         <Square className = "square" idd = {'c2'} fx = {fx}/>
+                         <Square className = "square" idd = {'c3'} fx = {fx}/>
+
                </div>
             </div>
        );
