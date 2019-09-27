@@ -70,7 +70,7 @@ import Wheat_img from './icons/wheat.png';
           );
      }
 
-     build_factory() {
+     build_factory(idd) {
           var t = this.state;
           var tem_workers = t.workers;
           if (t.workers > 1) {
@@ -80,19 +80,28 @@ import Wheat_img from './icons/wheat.png';
           if (t.energy < 2 || t.minerals <4 || t.workers < 1 || t.alloys < 3) {
                this.setState({message:"Not enough resources to build a factory"})
           } else {
+                let new_board = JSON.parse(JSON.stringify(this.state.board))
+                new_board[idd] = this.state.board[idd] + 1
+               
+
+
+
                this.setState({
                     factories : t.factories + 1,
                     energy : t.energy - 1,
                     minerals : t.minerals - 4,
                     workers : tem_workers,
                     alloys : t.alloys - 3,
+                    board:new_board
                })
+
+               
           }
      }
 
      sell_factory() {
           var t = this.state;
-          if (t.factory < 2) {
+          if (t.factories < 2) {
                this.setState({message:"Not enough resources to sell a factory"})
           } else {
                this.setState({
@@ -172,6 +181,17 @@ import Wheat_img from './icons/wheat.png';
           }
      }
 
+     render_square(idd) {
+          return(
+               <Square className = "square"
+                    idd = {idd}
+                    num_factories = {this.state.board[idd]}
+                    fx = {[() => this.build_factory(idd),
+                         () => this.sell_factory() ]}
+               />
+          );
+     }
+
 
      render() {
           let {
@@ -183,10 +203,8 @@ import Wheat_img from './icons/wheat.png';
                day,
                factories,
                workers,
-               board,
           } = this.state;
 
-           var fx = [() => this.build_factory(),() => this.sell_factory() ]
 
 
 
@@ -200,40 +218,56 @@ import Wheat_img from './icons/wheat.png';
                     <ResourceDisplay resourceName = {"alloys"} passedvalue1 = {alloys}/>
                     <div className = "mr_block">
                          <ButtonGroup  className = "mr_inline">
-                              <Button variant="secondary" size="sm" onClick = { () => this.buy_food()} >+</Button>
-                              <Button variant="secondary" size="sm" onClick = { () => this.sell_food()} >-</Button>
+                              <Button 
+                                   variant="secondary" 
+                                   size="sm" 
+                                   onClick = { () => this.buy_food()} >+</Button>
+                              <Button 
+                                   variant="secondary" 
+                                   size="sm" 
+                                   onClick = { () => this.sell_food()} >-</Button>
                          </ButtonGroup >
-                         <ResourceDisplay resourceName = {"food"} passedvalue1 = {food}/>
+                         <ResourceDisplay 
+                              resourceName = {"food"} 
+                              passedvalue1 = {food}/>
+                    </div>
+                    <div className = "mr_block">
+                         <ResourceDisplay 
+                              resourceName = {"factories"} 
+                              passedMethod = {() => this.rdcf()} 
+                              counts={factories}
+                         />
                     </div>
                     <div className = "mr_block">
                          <ButtonGroup className = "mr_inline">
-                              <Button variant="secondary" size="sm" onClick = { () => this.build_factory()} >+</Button>
-                              <Button variant="secondary" size="sm" onClick = { () => this.sell_factory()} >-</Button>
+                              <Button 
+                                   variant="secondary" 
+                                   size='sm' 
+                                   onClick = {() => this.hire_worker()} >+</Button>
+                              <Button 
+                                   variant="secondary" 
+                                   size='sm' 
+                                   onClick = {() => this.terminate_worker()} >-</Button>
                          </ButtonGroup>
-                         <ResourceDisplay resourceName = {"factories"} passedMethod = {() => this.rdcf()} counts={factories}/>
-                    </div>
-                    <div className = "mr_block">
-                         <ButtonGroup className = "mr_inline">
-                              <Button variant="secondary" size='sm' onClick = {() => this.hire_worker()} >+</Button>
-                              <Button variant="secondary" size='sm' onClick = {() => this.terminate_worker()} >-</Button>
-                         </ButtonGroup>
-                         <ResourceDisplay resourceName = {"workers"} passedMethod = {() => this.rdcw()} counts={workers}/>
+                         <ResourceDisplay 
+                              resourceName = {"workers"} 
+                              passedMethod = {() => this.rdcw()} counts={workers}/>
                     </div>
                     <ResourceDisplay resourceName = {"day"} passedvalue1 = {day}/>
                </div>
                <div className = "board">
                     <div className = "board-row"/>
-                         <Square className = "square" idd = {'a1'} fx = {fx}/>
-                         <Square className = "square" idd = {'a2'} fx = {fx}/>
-                         <Square className = "square" idd = {'a3'} fx = {fx}/>
+                         {this.render_square('a1')}
+                         {this.render_square('a2')}
+                         {this.render_square('a3')}
                     <div className = "board-row"/>
-                         <Square className = "square" idd = {'b1'} fx = {fx}/>
-                         <Square className = "square" idd = {'b2'} fx = {fx}/>
-                         <Square className = "square" idd = {'b3'} fx = {fx}/>
+                         {this.render_square('b1')}
+                         {this.render_square('b2')}
+                         {this.render_square('b3')}
                     <div className = "board-row"/>
-                         <Square className = "square" idd = {'c1'} fx = {fx}/>
-                         <Square className = "square" idd = {'c2'} fx = {fx}/>
-                         <Square className = "square" idd = {'c3'} fx = {fx}/>
+                         {this.render_square('c1')}
+                         {this.render_square('c2')}
+                         {this.render_square('c3')}
 
                </div>
             </div>
