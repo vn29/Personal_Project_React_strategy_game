@@ -9,7 +9,8 @@ class Square extends React.Component {
 
      render(){
           return(<div className = "square">
-                    
+                    {/* {this.props.idd} */}
+                    {this.props.num_factories + ' '}
                     <ButtonGroup className = "mr_inline">
                               <Button variant="secondary" 
                               size="sm" 
