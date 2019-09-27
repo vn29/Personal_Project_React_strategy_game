@@ -35,7 +35,18 @@ import Wheat_img from './icons/wheat.png';
                         b3: 0,
                         c1: 0,
                         c2: 0,
-                        c3: 0}
+                        c3: 0},
+               board_weights : {
+                    a1: 0.8,
+                    a2: 1.2,
+                    a3: 1.0,
+                    b1: 0.5,
+                    b2: 1.5,
+                    b3: 1,
+                    c1: 1.2,
+                    c2: 0.9,
+                    c3: 1.0
+               }
              };
           this.build_factory = this.build_factory.bind(this)
           this.sell_factory = this.sell_factory.bind(this)
@@ -48,7 +59,9 @@ import Wheat_img from './icons/wheat.png';
                alloys,
                factories,
                workers,
-               day
+               day,
+               board,
+               board_weights
           } = this.state;
 
           var tem_workers = workers;
@@ -56,12 +69,22 @@ import Wheat_img from './icons/wheat.png';
                var tem_workers = workers -1;
           };
 
+          
+
+          var total = 0;
+          for (var e in board) {
+               total += board[e]*board_weights[e];
+          }
+
+          var fact_avg = total/factories + 1
+
+
           this.setState(
                {
-                    energy : Math.max(energy + 1.*factories/2*workers/4 - workers/16,0),
-                    minerals : Math.max(minerals + 1.*factories/3*workers/2,0),
-                    food : Math.max(food + 1.*factories/2 - workers/5,0),
-                    alloys : Math.max(alloys + 1.*factories/8*workers/16*minerals/4,0),
+                    energy : Math.max(energy + 1.*fact_avg/2*workers/4 - workers/16,0),
+                    minerals : Math.max(minerals + 1.*fact_avg/3*workers/2,0),
+                    food : Math.max(food + 1.*fact_avg/2 - workers/5,0),
+                    alloys : Math.max(alloys + 1.*fact_avg/8*workers/16*minerals/4,0),
                     factories : factories,
                     workers : tem_workers,
                     day : day + 1,
@@ -83,9 +106,6 @@ import Wheat_img from './icons/wheat.png';
                 let new_board = JSON.parse(JSON.stringify(this.state.board))
                 new_board[idd] = this.state.board[idd] + 1
                
-
-
-
                this.setState({
                     factories : t.factories + 1,
                     energy : t.energy - 1,
