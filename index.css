@@ -1,88 +1,133 @@
 body {
-     font: 14px "Century Gothic", Futura, sans-serif;
-     margin: 20px;
-   }
-   
-   ol, ul {
-     padding-left: 30px;
-   }
+	margin: 20px;
+	font-size:12px;
+	font-family: Andale Mono, monospace;
+}
 
-   .RImage {
-     display: inline-block;
-     padding: 2px;
-   }
-   
-   .end-turn {
-     background: #999;
-     height: 34px;
-     width: 34px;
-     border: 1px solid #999;
-   }
-   .board-row:after {
-     clear: both;
-     content: "";
-     display: table;
-   }
-   
-   .status {
-     margin-bottom: 10px;
-   }
-   
-   .square  {
-     background: #fff;
-     border: 1px solid #999;
-     float: left;
-     font-size: 24px;
-     font-weight: bold;
-     line-height: 50px;
-     height: 50px;
-     margin-right: -1px;
-     margin-top: -1px;
-     padding: 0;
-     text-align: center;
-     width: 150px;
-   }
-   
-   .square:focus {
-     outline: none;
-   }
-   
-   .kbd-navigation .square:focus {
-     background: #ddd;
-   }
-   
-   .game {
-     display: flex;
-     flex-direction: row;
-   }
-   
-   .game-info {
-     margin-left: 20px;
-   }
-   
+ol,
+ul {
+	padding-left: 30px;
+}
 
-   .mr_block {
-     /*padding: 5px; */
-     display: block;
-   }
+.RImage {
+	display: inline-block;
+	padding: 2px;
+}
 
-   .mr_inline {
-    display: inline;
-  }
+.end-turn {
+	background: #999;
+	height: 34px;
+	width: 34px;
+	border: 1px solid #999;
+}
 
-  .main_display > div {
-    padding: 5px;
-  }
+.board-row:after {
+	clear: both;
+	content: "";
+	display: table;
+}
 
-  .end-turn-button {
-    margin: 10px;
-  }
+.status {
+	margin-bottom: 10px;
+}
 
-  .master {
-    width: auto;
-  }
+.square {
+	background: #fff;
+	border: 1px solid #789;
+	float: left;
+	font-size: 24px;
+	font-weight: bold;
+	line-height: 50px;
+	height: 50px;
+	margin-right: -1px;
+	margin-top: -1px;
+	padding: 0;
+	text-align: center;
+	width: 150px;
+}
 
+.square:focus {
+	outline: none;
+}
 
-  .board {
-    display: inline;
-  }
+.kbd-navigation .square:focus {
+	background: #ddd;
+}
+
+.game {
+	display: flex;
+	flex-direction: row;
+}
+
+.game-info {
+	margin-left: 20px;
+}
+
+.mr_block {
+	/*padding: 5px; */
+	display: block;
+}
+
+.mr_inline {
+	display: inline;
+}
+
+.main_display>div {
+	padding: 5px;
+}
+
+.end-turn-button {
+	margin: 10px;
+}
+
+.master {
+	width: auto;
+}
+
+.board {
+	display: inline;
+}
+.info {
+	font-family: Andale Mono, monospace;
+	background-color: #687;
+	border-radius: 10px;
+	padding: 5px;
+	display: table;
+	width:600px;
+	cursor: pointer;
+}
+.info_hide {
+	font-size: 0;
+	opacity: 10;
+	padding: 5px;
+	background-color: #687;
+	/*width: 200px;*/
+	height: 10px;
+	cursor: pointer;
+}
+p {
+	margin: 0px;
+}
+
+.thicker{
+	margin: 10px;
+}
+
+.resource-relations {
+	font-family: Andale Mono, monospace;
+	background-color: #888;
+	border-radius: 10px;
+	padding: 5px;
+	display: table;
+	width: flex;
+}
+
+.factory-map-title {
+	font-size: 16px;
+}
+.teritory-title {
+	font-size: 8px;
+	display: inline;
+	padding: 0px;
+	margin: 0px;
+}
